@@ -1,0 +1,38 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background: linear-gradient(#e66465, #9198e5);
+}
+
+h1 {
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    margin-right: 10px;
+}
+
+button {
+    padding: 8px 16px;
+}
+
+.result {
+    margin-top: 20px;
+}
+p{
+    background-color: white;
+}
+.head{
+    font-size: 2em;
+    background-color: aquamarine;
+    padding: 2%;
+    border-radius: 20px;
+}
+.data{
+    text-align: center;
+    width: 40%;
+}
