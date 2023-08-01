@@ -29,7 +29,8 @@ function calculateIncome() {
     const totalBonusTDS = totalMatrixBonus * (taxTDS / 100);
     // Calculate company profit
     const totalAdminCharges = (adminCharges/100) * totalMatrixBonus;
-    const companyProfit =incomeFromJoiningPackagePurchase - (incomeFromAdditionalProductPrice + totalMatrixBonus + totalBonusTDS + totalAdminCharges);
+    const totalCost = (incomeFromAdditionalProductPrice + totalMatrixBonus + totalBonusTDS + totalAdminCharges)
+    const companyProfit =incomeFromJoiningPackagePurchase - totalCost;
 
     // Display the results
     const mlmResult = document.getElementById("mlm-result");
@@ -49,6 +50,7 @@ function calculateIncome() {
         <p>Total Bonus TDS: ${totalBonusTDS}</p>
         <p>Admin Charges: ${totalAdminCharges}</p>
         <p>Total Capping Amount Max : ${bonusCapped}</p>
+        <h2> Total Cost (Product-Price,Bonus,TDS,Admin) : ${totalCost}
         <h2>Company Profit: ${companyProfit}</h2>
         <p> Total Unpair : ${unPair}</p>
       </span>
