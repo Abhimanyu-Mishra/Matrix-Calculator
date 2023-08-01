@@ -4,7 +4,6 @@ function calculateIncome() {
     const matrixDepth = parseInt(document.getElementById("matrix-depth").value);
     const matrixWidth = parseInt(document.getElementById("matrix-width").value);
     const matrixBonusDepth = parseInt(document.getElementById("matrix-bonus-depth").value);
-    const maximumPayout = parseInt(document.getElementById("maximum-payout").value);
     const adminCharges = parseInt(document.getElementById("admin-charges").value);
     const taxTDS = parseInt(document.getElementById("tax-tds").value);
 
