@@ -1,58 +1,40 @@
-function calculateIncome() {
-    const joiningPackageFee = parseInt(document.getElementById("joining-package-fee").value);
-    const productPrice = parseInt(document.getElementById("product-price").value);
-    const matrixDepth = parseInt(document.getElementById("matrix-depth").value);
-    const matrixWidth = parseInt(document.getElementById("matrix-width").value);
-    const matrixBonusDepth = parseInt(document.getElementById("matrix-bonus-depth").value);
-    const adminCharges = parseInt(document.getElementById("admin-charges").value);
-    const taxTDS = parseInt(document.getElementById("tax-tds").value);
+function calculateProfit() {
+  const joiningFees = parseFloat(document.getElementById("joiningFees").value);
+  const numberOfLegs = parseInt(document.getElementById("numberOfLegs").value);
+  const depthValues = document.getElementById("depthValues").value.trim();
 
-    // Calculate total members
-    const totalMembers = Math.pow(matrixWidth, matrixDepth);
+  // Convert depth values to an array and validate input
+  const depthArray = depthValues.split(",").map(depth => parseInt(depth.trim()));
+  if (depthArray.length !== numberOfLegs || depthArray.some(isNaN)) {
+    alert("Please enter valid depth values for each leg.");
+    return;
+  }
+  const  abc = depthValues.split(",")
+  console.log(abc);
 
-    // Calculate income from additional product price
-    const incomeFromAdditionalProductPrice = productPrice * totalMembers;
+  const bonus = parseFloat(document.getElementById("bonus").value);
+  const tds = parseFloat(document.getElementById("tds").value);
+  const adminCharges = parseFloat(document.getElementById("adminCharges").value);
 
-    // Calculate income from joining package purchase
-    const incomeFromJoiningPackagePurchase = joiningPackageFee * totalMembers;
+  // Calculate total pair and bonus income
+  const totalPairs = Math.floor(numberOfLegs / 2);
 
-    const totalPair = totalMembers/2;
-    const actualPair = Math.floor(totalPair)
-    // Calculate total matrix bonus
-    const totalMatrixBonus = matrixBonusDepth *actualPair ;
-    const bonusCapped = (incomeFromJoiningPackagePurchase*60/100);
-    
-    const afterbonusCapped = incomeFromJoiningPackagePurchase-bonusCapped
+  // Calculate bonus income based on depth levels and pair matching in different legs
+  let totalBonusIncome = 0;
+  for (let i = 0; i < depthArray.length; i++) {
+    const depthBonusRate = depthArray[i];
 
-    // Calculate total bonus TDS
-    const totalBonusTDS = totalMatrixBonus * (taxTDS / 100);
-    // Calculate company profit
-    const totalAdminCharges = (adminCharges/100) * totalMatrixBonus;
-    const totalCost = (incomeFromAdditionalProductPrice + totalMatrixBonus + totalBonusTDS + totalAdminCharges)
-    const companyProfit =incomeFromJoiningPackagePurchase - totalCost;
+    // Calculate pairs for each leg
+    const pairsInThisLeg = Math.floor(depthArray[i] / 2);
+    totalBonusIncome += pairsInThisLeg * bonus * depthBonusRate;
+  }
 
-    // Display the results
-    const mlmResult = document.getElementById("mlm-result");
-    mlmResult.innerHTML = ""; // Clear previous results
+  // Calculate total profit
+  const totalProfit = totalBonusIncome - (tds + adminCharges) - joiningFees;
 
-    const unPair = totalMembers%2
-    // Add calculated values to the result element
-    const resultHtml = `
-      <span class= "data">
-        <h2>MLM Matrix Calculator Results:</h2>
-        <p>No. of Levels: ${matrixDepth}</p>
-        <p>Total Members: ${totalMembers}</p>
-        <p>Total Maching Pair : ${Math.floor(totalPair)}</p>
-        <p>Income from Additional Product Price: ${incomeFromAdditionalProductPrice}</p>
-        <p>Income from Joining Package Purchase: ${incomeFromJoiningPackagePurchase}</p>
-        <p>Total Matrix Bonus: ${totalMatrixBonus}</p>
-        <p>Total Bonus TDS: ${totalBonusTDS}</p>
-        <p>Admin Charges: ${totalAdminCharges}</p>
-        <p>Total Capping Amount Max : ${bonusCapped}</p>
-        <h2> Total Cost (Product-Price,Bonus,TDS,Admin) : ${totalCost}
-        <h2>Company Profit: ${companyProfit}</h2>
-        <p> Total Unpair : ${unPair}</p>
-      </span>
-    `;
-    mlmResult.innerHTML = resultHtml;
+  // Display the result
+  const resultElement = document.getElementById("result");
+  resultElement.innerHTML = `Total Pairs: ${totalPairs}<br>
+                             Total Bonus Income: ${totalBonusIncome}<br>
+                             Total Profit: ${totalProfit}`;
 }
